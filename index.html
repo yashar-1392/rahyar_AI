@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هوش مصنوعی رهیار | دستیار هوشمند شما</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap');
+        body { font-family: 'Vazirmatn', sans-serif; background: radial-gradient(circle at top, #1e1b4b 0%, #0f172a 100%); color: #e2e8f0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .ai-bold-text { font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.08); padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.15); }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="h-screen flex flex-col justify-between overflow-hidden">
+
+    <!-- هدر پلتفرم -->
+    <header class="glass-card border-b border-slate-800/80 p-4 flex justify-between items-center shadow-2xl z-10">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-indigo-600 to-sky-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                <i class="fas fa-brain text-xl text-white"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-base text-white tracking-wide">رهیار</h1>
+                <p class="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span> آنلاین و آماده
+                </p>
+            </div>
+        </div>
+        <button id="back-to-menu" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 px-4 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-2 shadow-md">
+            <i class="fas fa-arrow-right"></i> برگردیم به منوی اصلی
+        </button>
+    </header>
+
+    <!-- بخش اصلی نمایش داینامیک ابزارها -->
+    <main class="flex-1 overflow-y-auto p-4 custom-scrollbar max-w-4xl mx-auto w-full flex flex-col">
+        
+        <!-- منوی اصلی پلتفرم -->
+        <div id="main-menu" class="space-y-6 py-4 my-auto">
+            <div class="text-center space-y-3 mb-6">
+                <h2 class="text-2xl font-extrabold text-white">سلام، من رهیار هستم</h2>
+                <p class="text-sm text-slate-300 font-light">چطور می‌تونم کمک کنم؟</p>
+            </div>
+
+            <!-- لیست خدمات فعال و غیرفعال -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- ۱. چت معمولی -->
+                <button onclick="switchService('chat')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400 group-hover:bg-indigo-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-indigo-300 transition-colors"> گفتگو با رهیار</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">گپ‌وگفت آزاد متنی برای سوالات و کارهای روزمره شما</p>
+                    </div>
+                </button>
+
+                <!-- ۲. پرامپت‌های سریع -->
+                <button onclick="switchService('prompts')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-emerald-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 group-hover:bg-emerald-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-emerald-300 transition-colors">⚡ پرامپت‌های سریع</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">یه الگوی آماده انتخاب کن، متن رو تکمیل کن، رهیار برات می‌نویسه!</p>
+                    </div>
+                </button>
+
+                <!-- ۳. ابزارهای هوشمند متن -->
+                <button onclick="switchService('text-tools')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-amber-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400 group-hover:bg-amber-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-file-lines"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-amber-300 transition-colors"> ابزارهای هوشمند متن</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">مترجم، خلاصه‌ساز، بازنویسی و تحلیل حرفه‌ای متن</p>
+                    </div>
+                </button>
+
+                <!-- ۴. کدنویسی -->
+                <button onclick="switchService('coding')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-sky-400/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-sky-500/10 rounded-xl text-sky-400 group-hover:bg-sky-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-sky-300 transition-colors"> کد نویسی</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">دستیار هوشمند برنامه‌نویسی، نوشتن و اصلاح باگ‌ها</p>
+                    </div>
+                </button>
+
+                <!-- ۵. کانال هوشمند -->
+                <button onclick="switchService('channel')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-purple-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400 group-hover:bg-purple-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-purple-300 transition-colors"> کانال هوشمند با رهیار</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">تولید محتوا و آماده‌سازی خودکار پست برای کانال شبکه‌های اجتماعی</p>
+                    </div>
+                </button>
+
+                <!-- ۶. تفکر عمیق -->
+                <button onclick="switchService('deep-think')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-cyan-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400 group-hover:bg-cyan-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-cyan-300 transition-colors"> تفکر عمیق</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">تحلیل‌های عمیق و همه‌جانبه (ممکن است زمان بیشتری نیاز داشته باشد)</p>
+                    </div>
+                </button>
+
+                <!-- ۷. خرید هوشمند -->
+                <button onclick="switchService('smart-buy')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-rose-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-rose-500/10 rounded-xl text-rose-400 group-hover:bg-rose-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-rose-300 transition-colors"> خرید هوشمند</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">مقایسه نام محصولات برای داشتن یک انتخاب اقتصادی و درست</p>
+                    </div>
+                </button>
+
+                <!-- ۸. مطالعه و یادگیری -->
+                <button onclick="switchService('study')" class="glass-card p-4 rounded-2xl flex items-center gap-4 hover:border-violet-500/50 hover:bg-slate-800/80 transition-all text-right group shadow-md">
+                    <div class="p-3 bg-violet-500/10 rounded-xl text-violet-400 group-hover:bg-violet-500/20 w-12 h-12 flex items-center justify-center text-lg">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white group-hover:text-violet-300 transition-colors"> مطالعه و یادگیری</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">هوش مصنوعی تخصصی درسی و مربی آموزشی شما</p>
+                    </div>
+                </button>
+
+                <!-- بخش‌های غیرفعال (به‌زودی) -->
+                <button onclick="triggerSoon('ساخت تصویر')" class="glass-card p-4 rounded-2xl flex items-center gap-4 opacity-40 border-dashed border-slate-700 text-right w-full cursor-pointer">
+                    <div class="p-3 bg-slate-800 rounded-xl text-slate-400 w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-image"></i></div>
+                    <div><h3 class="font-bold text-slate-400"> ساخت تصویر (به‌زودی)</h3></div>
+                </button>
+
+                <button onclick="triggerSoon('متن به صوت')" class="glass-card p-4 rounded-2xl flex items-center gap-4 opacity-40 border-dashed border-slate-700 text-right w-full cursor-pointer">
+                    <div class="p-3 bg-slate-800 rounded-xl text-slate-400 w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-volume-high"></i></div>
+                    <div><h3 class="font-bold text-slate-400"> متن به صوت (به‌زودی)</h3></div>
+                </button>
+
+                <button onclick="triggerSoon('ساخت ویدئو')" class="glass-card p-4 rounded-2xl flex items-center gap-4 opacity-40 border-dashed border-slate-700 text-right w-full cursor-pointer">
+                    <div class="p-3 bg-slate-800 rounded-xl text-slate-400 w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-video"></i></div>
+                    <div><h3 class="font-bold text-slate-400"> ساخت ویدئو (به‌زودی)</h3></div>
+                </button>
+
+                <button onclick="triggerSoon('مکالمه صوتی با رهیار')" class="glass-card p-4 rounded-2xl flex items-center gap-4 opacity-40 border-dashed border-slate-700 text-right w-full cursor-pointer">
+                    <div class="p-3 bg-slate-800 rounded-xl text-slate-400 w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-microphone"></i></div>
+                    <div><h3 class="font-bold text-slate-400"> مکالمه صوتی با رهیار (به‌زودی)</h3></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- رابط چت و ابزارها -->
+        <div id="chat-interface" class="hidden flex-1 flex flex-col space-y-4 h-full min-h-0">
+            
+            <!-- انتخاب شخصیت چت (پایین هدر / بالای باکس چت) -->
+            <div id="persona-selector" class="glass-card p-3 rounded-2xl hidden">
+                <span class="text-xs text-slate-400 block mb-2"><i class="fas fa-user-gear text-indigo-400 ml-1"></i> انتخاب شخصیت پاسخ‌دهی رهیار:</span>
+                <div class="flex flex-wrap gap-1.5">
+                    <button onclick="setPersona('normal', event)" class="persona-btn bg-indigo-600 text-white text-xs px-3 py-1.5 rounded-xl font-medium transition-all">🤖 عادی (دستیار چندمنظوره)</button>
+                    <button onclick="setPersona('pessimistic', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">🤨 بدبین (شکاک و بدبین)</button>
+                    <button onclick="setPersona('funny', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">😂 شوخ‌طبع (شوخ و صمیمی)</button>
+                    <button onclick="setPersona('playful', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">😜 بازیگوش (بازیگوش، خلاق و پرانرژی)</button>
+                    <button onclick="setPersona('detective', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">🧐 کارآگاه (ریزبینی جزییات)</button>
+                    <button onclick="setPersona('professional', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">🤓 حرفه‌ای (دقیق و ساختاریافته)</button>
+                    <button onclick="setPersona('emotionless', event)" class="persona-btn bg-slate-800 text-slate-300 text-xs px-3 py-1.5 rounded-xl font-medium transition-all hover:bg-slate-700">😶 بی‌احساس (منطقی و داده‌محور)</button>
+                </div>
+            </div>
+
+            <!-- ساب‌منوی ماژول‌ها -->
+            <div id="sub-menu-container" class="glass-card p-3 rounded-2xl hidden">
+                <span class="text-xs text-slate-400 block mb-2" id="sub-menu-title">انتخاب نوع الگو:</span>
+                <div class="flex flex-wrap gap-1.5" id="sub-menu-options"></div>
+            </div>
+
+            <!-- باکس چت اصلی -->
+            <div id="chat-box" class="flex-1 bg-slate-950/80 border border-slate-800 rounded-2xl p-4 overflow-y-auto custom-scrollbar space-y-3 shadow-inner">
+                <div id="system-welcome" class="bg-indigo-950/30 border border-indigo-900/40 p-3 rounded-xl text-xs text-slate-300 leading-relaxed flex items-start gap-2">
+                    <i class="fas fa-lightbulb text-indigo-400 mt-0.5"></i>
+                    <div id="tool-instruction">سیستم آماده‌ست. درخواست خود را بنویسید!</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- فوتر پلتفرم -->
+    <footer class="glass-card border-t border-slate-800/80 p-4 w-full z-10">
+        <div class="max-w-4xl mx-auto space-y-4">
+            
+            <!-- کادر ورود پیام متنی -->
+            <div id="input-container" class="hidden flex gap-2">
+                <input type="text" id="user-input" placeholder="درخواستت رو اینجا برام بنویس..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-indigo-500 shadow-inner">
+                <button id="send-btn" class="bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white px-5 py-3 rounded-xl transition-all flex items-center justify-center shadow-lg shadow-indigo-600/10">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+
+            <!-- وضعیت پردازش ابری -->
+            <div class="text-center text-[10px] text-slate-500" id="current-status">وضعیت: آماده به کار</div>
+
+            <!-- گزینه‌های کوچک زیر کادر پیام -->
+            <div class="grid grid-cols-4 gap-1 text-center text-[11px] text-slate-400 border-t border-slate-800/60 pt-3">
+                <button onclick="showFooterModal('invite')" class="hover:text-white transition-colors py-1 flex flex-col items-center gap-1 font-medium"><i class="fas fa-user-plus text-sm text-slate-500"></i> دعوت از دوستان</button>
+                <button onclick="showFooterModal('help')" class="hover:text-white transition-colors py-1 flex flex-col items-center gap-1 font-medium"><i class="fas fa-book-open text-sm text-slate-500"></i> راهنما</button>
+                <button onclick="showFooterModal('about')" class="hover:text-white transition-colors py-1 flex flex-col items-center gap-1 font-medium"><i class="fas fa-circle-info text-sm text-slate-500"></i> درباره</button>
+                <a href="https://ble.ir/rahyar_support_bot" target="_blank" class="hover:text-white transition-colors py-1 flex flex-col items-center gap-1 font-medium"><i class="fas fa-headset text-sm text-slate-500"></i> پشتیبانی</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_KEY = "sk-mhQ4U9ctWjYipBa2uO6b2fB7ccEf2KlvIugcRf18bf0Fdj05";
+        const BASE_URL = "https://api.gapgpt.app/v1";
+        
+        let currentService = "menu";
+        let activeSubTemplate = null;
+        let selectedPersona = "normal";
+
+        // تعریف ویژگی‌های رفتاری شخصیت‌های چت طبق توصیف شما
+        const personas = {
+            normal: "تو یک دستیار هوشمند، همه فن حریف و راهنمای عالی به نام رهیار (دستیار چندمنظوره) هستی. لحن صمیمی و محترمانه داشته باش. کلمات مهم را بین ** قرار بده.",
+            pessimistic: "تو دستیار شکاک، منتقد و کاملاً بدبین به نام رهیار هستی. مسائل رو با نگاه شکاکانه بررسی کن ولی کار رو انجام بده. کلمات مهم رو بین ** بذار.",
+            funny: "تو دستیار فوق‌العاده شوخ‌طبع، بامزه و بسیار صمیمی به نام رهیار هستی. شوخ و صمیمی باش و کلمات مهم رو درون ** بذار.",
+            playful: "تو پرسونای بازیگوش، خلاق، پرانرژی و شیطون داری. پاسخ‌ها رو خلاقانه و با چاشنی بازیگوشی بنویس و کلمات کلیدی رو با ** متمایز کن.",
+            detective: "تو یک کارآگاه بسیار کنجکاو هستی که عاشق زوم کردن روی ریزترین جزئیاته. با کنجکاوی دنبال جزئیات برو و جزییات بیشتری در پاسخ‌ها ارائه کن و اونا رو بین ** بذار.",
+            professional: "تو متخصص ارشد و کاملاً حرفه‌ای هستی. پاسخ‌ها را به صورت کاملا حرفه‌ای، دقیق و ساختاریافته ارائه کن و بخش‌های مهم رو بین ** ثبت کن.",
+            emotionless: "تو یک سیستم کاملاً منطقی، داده‌محور، فاقد هرگونه احساسات (بی‌احساس) هستی. پاسخ را کاملاً منطقی و بر اساس داده و آمار بده و با ** متمایز کن."
+        };
+
+        function formatMarkdownBold(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong class="ai-bold-text">$1</strong>');
+        }
+
+        // عملکرد کلیک بر روی بخش‌های در دست ساخت
+        function triggerSoon(title) {
+            alert(`به زودی...`);
+        }
+
+        function switchService(service) {
+            currentService = service;
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('chat-interface').classList.remove('hidden');
+            document.getElementById('input-container').classList.remove('hidden');
+            document.getElementById('back-to-menu').classList.remove('hidden');
+            
+            document.getElementById('persona-selector').classList.add('hidden');
+            document.getElementById('sub-menu-container').classList.add('hidden');
+            document.getElementById('chat-box').innerHTML = '';
+
+            if(service === 'chat') {
+                document.getElementById('persona-selector').classList.remove('hidden');
+                document.getElementById('tool-instruction').innerText = "بخش گفتگو فعال شد. شخصیت مورد نظرت رو از دکمه‌های بالا انتخاب کن و چت رو شروع کن!";
+            } else if(service === 'prompts') {
+                setupSubMenu("انتخاب الگوی سریع آماده:", [
+                    { name: "✉️ ایمیل حرفه‌ای", id: "✉️ ایمیل حرفه‌ای", hint: "یه ایمیل حرفه‌ای و رسمی بنویس. متن یا توضیحات پایه‌ای رو بنویس:" },
+                    { name: "💡 ایده‌پردازی", id: "💡 ایده‌پردازی", hint: "ایده‌های خلاقانه و کاربردی بده. چالش یا موضوعت چیه؟" },
+                    { name: "📝 توضیحات محصول/خدمات", id: "📝 توضیحات محصول/خدمات", hint: "یه توضیح جذاب و حرفه‌ای بنویس. ویژگی‌های محصول یا خدمات رو بفرست:" },
+                    { name: "🎓 توضیح مفهوم ساده", id: "🎓 توضیح مفهوم ساده", hint: "این مفهوم رو ساده توضیح بده. نام مبحث یا تئوری چی هست؟" },
+                    { name: "💼 بخشی از رزومه", id: "💼 بخشی از رزومه", hint: "یه بخش حرفه‌ای از رزومه بنویس. سوابق و مهارت‌ها رو اینجا وارد کن:" },
+                    { name: "📱 کپشن شبکه اجتماعی", id: "📱 کپشن شبکه اجتماعی", hint: "یه کپشن جذاب برای پست شبکه‌های اجتماعی بنویس. موضوع پست چیه؟" },
+                    { name: "🔍 مقایسه و تحلیل", id: "🔍 مقایسه و تحلیل", hint: "دو گزینه رو مقایسه و تحلیل کن. نام دو مورد رو بنویس:" },
+                    { name: "🧪 برنامه علمی", id: "🧪 برنامه علمی", hint: "یه برنامه گام‌به‌گام و عملی بنویس. هدف نهایی رو مشخص کن:" },
+                    { name: "🧑‍💻 بررسی کد", id: "🧑‍💻 بررسی کد", hint: "این کد رو بررسی، باگ‌ها رو پیدا و اصلاح کن. کدت رو اینجا بفرست:" },
+                    { name: "🎭 داستان کوتاه", id: "🎭 داستان کوتاه", hint: "یه داستان کوتاه جذاب بنویس. سوژه یا سبک داستان رو بگو:" }
+                ]);
+            } else if(service === 'text-tools') {
+                setupSubMenu("ابزار هوشمند متن:", [
+                    { name: "🌐 مترجم: فارسی ↔️ انگلیسی", id: "🌐 مترجم", hint: "متن مورد نظرت رو بنویس تا به صورت روان ترجمه بشه:" },
+                    { name: "📋 خلاصه‌ساز: خلاصه متن", id: "📋 خلاصه‌ساز", hint: "متن طولانی رو اینجا بفرست تا خلاصه‌ش رو برات استخراج کنم:" },
+                    { name: "✍️ بازنویسی: ویرایش متن", id: "✍️ بازنویسی", hint: "متن رو بنویس تا بهبود و ویرایش لحن روش انجام بشه:" },
+                    { name: "🔍 تحلیل متن: احساسات + نکات", id: "🔍 تحلیل متن", hint: "متن رو بفرست تا احساسات و نکات کلیدی اون تحلیل و بررسی بشه:" }
+                ]);
+            } else if(service === 'coding') {
+                setupSubMenu("دستیار هوشمند کد نویسی:", [
+                    { name: "🛠️ اصلاح کد و رفع باگ", id: "🛠️ اصلاح کد", hint: "کد یا ارور رو بفرست تا برات باگ‌هاش رو رفع و اصلاح کنم:" },
+                    { name: "✍️ نوشتن کد جدید", id: "✍️ نوشتن کد", hint: "توضیحات و نیازمندی‌های کدی که می‌خوای نوشته بشه رو برام بنویس:" }
+                ]);
+            } else if(service === 'channel') {
+                document.getElementById('tool-instruction').innerHTML = `با این قابلیت، رهیار برات محتوا تولید می‌کنه و برای کانال شبکه های اجتماعی خودت آماده میکنه تا پست بذاری!<br><br>
+                لطفاً اطلاعات زیر رو به من بده تا یک پست جالب برای کانالت آماده کنم:<br>
+                🎭 <b>تعریف چگونه‌گی رهیار برای کانال:</b> (مثال: «تو یه نویسنده محتوای تکنولوژی هستی که با لحن شاد و جوان می‌نویسی. از مثال‌های واقعی استفاده می‌کنی و محتوا آموزشی است.»)<br>
+                📌 <b>موضوع کانال:</b> (موضوع اصلی کانال رو بنویس تا محتواها مرتبط‌تر باشن مثال: تکنولوژی | سلامت و تغذیه | کسب‌وکار | طراحی | آموزش زبان)<br>
+                😀 <b>ایموجی باشه؟</b><br>
+                📏 <b>طول پیام چقدر باشه؟</b>`;
+            } else if(service === 'deep-think') {
+                document.getElementById('tool-instruction').innerText = "💡 در این مورد رهیار خیلی عمیق فکر میکنه و همه چی رو میسنجه. پاسخ خیلی درست و کاملی میده. در ضمن در استفاده از این قابلیت ممکنه دریافت پاسخ یکم طول بکشه چون رهیار داره فکر میکنه.";
+            } else if(service === 'smart-buy') {
+                document.getElementById('tool-instruction').innerText = "🛍️ در این سرویس رهیار کمک میکنه تا کاربر خرید هوشمندانه‌ای داشته باشه. در این قابلیت کاربر باید نام محصولات رو برای مقایسه بنویسه و رهیار کمک کنه تا خرید هوشمندانه‌ای داشته باشه.";
+            } else if(service === 'study') {
+                document.getElementById('tool-instruction').innerText = "📖 به بخش مطالعه و یادگیری خوش آمدید. من یک هوش مصنوعی درسی و آموزشی اختصاصی برای حل مسائل و یادگیری مباحث شما هستم.";
+            }
+        }
+
+        document.getElementById('back-to-menu').addEventListener('click', () => {
+            document.getElementById('main-menu').classList.remove('hidden');
+            document.getElementById('chat-interface').classList.add('hidden');
+            document.getElementById('input-container').classList.add('hidden');
+            document.getElementById('back-to-menu').classList.add('hidden');
+            currentService = "menu";
+        });
+
+        function setupSubMenu(title, options) {
+            const container = document.getElementById('sub-menu-container');
+            const titleEl = document.getElementById('sub-menu-title');
+            const optionsEl = document.getElementById('sub-menu-options');
+            
+            container.classList.remove('hidden');
+            titleEl.innerText = title;
+            optionsEl.innerHTML = '';
+            
+            options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `sub-opt-btn bg-slate-800 border border-slate-700/60 text-slate-300 text-xs px-3 py-1.5 rounded-xl transition-all hover:bg-slate-700`;
+                btn.innerText = opt.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('.sub-opt-btn').forEach(b => b.classList.replace('bg-indigo-600', 'bg-slate-800'));
+                    btn.classList.replace('bg-slate-800', 'bg-indigo-600');
+                    activeSubTemplate = opt.id;
+                    document.getElementById('tool-instruction').innerText = opt.hint;
+                };
+                optionsEl.appendChild(btn);
+                if(index === 0) btn.click();
+            });
+        }
+
+        function setPersona(pKey, event) {
+            selectedPersona = pKey;
+            document.querySelectorAll('.persona-btn').forEach(b => b.classList.replace('bg-indigo-600', 'bg-slate-800'));
+            event.target.classList.replace('bg-slate-800', 'bg-indigo-600');
+        }
+
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+        document.getElementById('user-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
+
+        async function sendMessage() {
+            const inputEl = document.getElementById('user-input');
+            const text = inputEl.value.trim();
+            if(!text) return;
+
+            inputEl.value = '';
+            appendMessage('کاربر', text, 'bg-slate-800/80 text-slate-100 self-end ml-12');
+            
+            document.getElementById('current-status').innerText = "⏳ دارم فکر میکنم...";
+
+            let systemPrompt = personas[selectedPersona];
+            let userPrompt = text;
+            let targetModel = "gpt-4o";
+
+            if(currentService === 'prompts') {
+                systemPrompt = `تو بخش الگوهای سریع پلتفرم رهیار هستی. وظیفه تو اینه که ورودی کاربر رو دقیقاً بر اساس قالب انتخابی پردازش کنی. قالب انتخاب شده: ${activeSubTemplate}. کلمات کلیدی مهم را با ** متمایز کن.`;
+            } else if(currentService === 'text-tools') {
+                systemPrompt = `تو ابزار هوشمند متنی رهیار هستی. عملیات درخواستی: ${activeSubTemplate}. درخواست را با دقت روی متن انجام بده و ساختار اصلی را با ** منظم کن.`;
+            } else if(currentService === 'coding') {
+                systemPrompt = `تو بخش مهندسی کد و برنامه نویسی رهیار هستی. عملیات درخواستی: ${activeSubTemplate}. کدهایی تمیز تولید کن و نکات فنی یا توضیحات را بین ** قرار بده.`;
+            } else if(currentService === 'channel') {
+                systemPrompt = "تو سیستم کانال هوشمند با رهیار هستی. کاربر اطلاعات هویتی کانال، ایموجی، طول و ایده سوژه را برایت فرستاده است. یک پست کامل، جذاب، متناسب با ایده و آماده کپی کردن برای کانال شبکه اجتماعیش بساز. بخش‌های مهم را بین ** بذار.";
+            } else if(currentService === 'deep-think') {
+                systemPrompt = "تو سیستم تفکر عمیق پلتفرم رهیار هستی. مسئله کاربر رو از همه ابعاد و زوایا عمیقاً تحلیل کن و یک پاسخ بسیار کامل، جامع و لایه‌بندی شده ارائه بده. عناوین رو بین ** بذار.";
+                targetModel = "gemini-2.5-pro"; // استفاده از مدل سنگین‌تر برای حالت تفکر عمیق
+            } else if(currentService === 'smart-buy') {
+                systemPrompt = "تو مشاور خرید هوشمند رهیار هستی. محصولات فرستاده شده رو از نظر قیمت، مشخصات فنی، ارزش خرید، مزایا و معایب کاملاً مقایسه کن تا کاربر خرید هوشمندانه‌ای داشته باشه. ویژگی‌های کلیدی رو بین ** قرار بده.";
+            } else if(currentService === 'study') {
+                systemPrompt = "تو هوش مصنوعی تخصصی درسی و مربی یادگیری پلتفرم رهیار هستی. مفاهیم آموزشی و مسائل علمی را کاملاً روان و قابل فهم توضیح بده و تعاریف یا فرمول‌های مهم رو بین ** تعبیه کن.";
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: targetModel,
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: userPrompt }
+                        ]
+                    })
+                });
+
+                const data = await response.json();
+                const reply = data.choices[0].message.content;
+                appendMessage('رهیار', reply, 'bg-slate-900 border border-slate-800 text-slate-100 mr-12 shadow-md');
+            } catch (error) {
+                appendMessage('سیستم', 'یک خطایی در اتصال به شبکه پردازش ابری پیش اومد. دوباره امتحان کنید.', 'bg-rose-950/80 text-rose-300');
+            } finally {
+                document.getElementById('current-status').innerText = "من آماده‌ام!";
+            }
+        }
+
+        function appendMessage(sender, text, classes) {
+            const box = document.getElementById('chat-box');
+            const msg = document.createElement('div');
+            msg.className = `p-3.5 rounded-2xl text-xs leading-relaxed space-y-1 max-w-[85%] shadow-sm ${classes}`;
+            
+            const formattedText = formatMarkdownBold(text);
+
+            msg.innerHTML = `<strong class="text-[10px] block text-sky-400 tracking-wider font-bold mb-0.5">${sender}:</strong><div>${formattedText.replace(/\n/g, '<br>')}</div>`;
+            box.appendChild(msg);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        // مدیریت دیالوگ‌های کوچک فوتر بر اساس اطلاعات درخواستی شما
+        function showFooterModal(type) {
+            if(type === 'invite') {
+                alert("سلام! من از پلتفرم هوشمند «رهیار» برای پیشبرد کارهام، تولید متن‌ها، تحلیل‌های عمیق و کدهای برنامه‌نویسی استفاده می‌کنم. یه دستیار همه فن حریفه، پیشنهاد می‌کنم حتماً امتحانش کنی!");
+            } else if(type === 'help') {
+                alert("راهنمای جامع پلتفرم رهیار:\n\n۱. سرویس گفتگو: چت آزاد با قابلیت تغییر دادن هویت و لحن رهیار (عادی، بدبین، شوخ‌طبع، بازیگوش، کارآگاه، حرفه‌ای، بی‌احساس).\n۲. پرامپت‌های سریع و ابزارهای متن: کافیه نوع قالب درخواستی رو از منوی کوچک بالای چت انتخاب کنی، سپس متنت رو بفرستی.\n۳. کانال هوشمند: طبق راهنمای متنی داخل کادر، اطلاعات خواسته شده رو بفرست تا یک پست بی‌نقص تحویل بگیری.\n۴. تفکر عمیق و خرید هوشمند: برای تحلیل‌های ساختاریافته و مقایسه دقیق کالاها طراحی شده‌اند.");
+            } else if(type === 'about') {
+                alert("درباره پلتفرم رهیار:\n\nرهیار یک دستیار چندمنظوره و پیشرفته هوش مصنوعی است که جهت بومی‌سازی و تسهیل دسترسی به ابزارهای پردازش متن، دستیاری کدنویسی، تحلیل‌های عمیق داده‌ای و مشاوره‌های تخصصی برای کاربران فارسی‌زبان طراحی گردیده است.");
+            }
+        }
+    </script>
+</body>
+</html>
